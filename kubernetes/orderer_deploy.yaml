@@ -13,9 +13,9 @@ spec:
         name: orderer
     spec:
       volumes:
-      - name: fabricfiles
-        persistentVolumeClaim:
-          claimName: fabric-pvc
+      # - name: fabricfiles
+      #   persistentVolumeClaim:
+      #     claimName: fabric-pvc
 
       containers:
       - name: orderer
@@ -99,8 +99,8 @@ spec:
         - name: ORDERER_OPERATIONS_TLS_CLIENTAUTHREQUIRED
           value: "false"
         volumeMounts:
-        - mountPath: /fabric
-          name: fabricfiles
+        # - mountPath: /fabric
+        #   name: fabricfiles
         # - mountPath: /etc/hosts
         #   name: fabricfiles
         #   subPath: ./config/hosts          

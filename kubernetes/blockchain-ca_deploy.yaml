@@ -13,9 +13,9 @@ spec:
         name: ca
     spec:
       volumes:
-      - name: fabricfiles
-        persistentVolumeClaim:
-          claimName: fabric-pvc
+      # - name: fabricfiles
+      #   persistentVolumeClaim:
+      #     claimName: fabric-pvc
 
       containers:
       - name: ca
@@ -39,8 +39,8 @@ spec:
         - name: GODEBUG
           value: "netdns=go"
         volumeMounts:
-        - mountPath: /fabric
-          name: fabricfiles
+        # - mountPath: /fabric
+        #   name: fabricfiles
         # - mountPath: /etc/hosts
         #   name: fabricfiles
         #   subPath: ./config/hosts          
