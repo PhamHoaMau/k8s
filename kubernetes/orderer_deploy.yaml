@@ -1,0 +1,106 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: orderer
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      name: orderer
+  template:
+    metadata:
+      labels:
+        name: orderer
+    spec:
+      volumes:
+      - name: fabricfiles
+        persistentVolumeClaim:
+          claimName: fabric-pvc
+
+      containers:
+      - name: orderer
+        image: hyperledger/fabric-orderer:amd64-2.2.0
+        command: ["sh", "-c", "orderer"]
+        env:
+        - name: FABRIC_LOGGING_SPEC
+          value: "INFO"
+        - name: ORDERER_CFG_PATH
+          value: /fabric/
+        - name: ORDERER_GENERAL_LEDGERTYPE
+          value: file
+        - name: ORDERER_FILELEDGER_LOCATION
+          value: /fabric/ledger/orderer
+        - name: ORDERER_GENERAL_BATCHTIMEOUT
+          value: 1s
+        - name: ORDERER_GENERAL_BATCHSIZE_MAXMESSAGECOUNT
+          value: "10"
+        - name: ORDERER_GENERAL_MAXWINDOWSIZE
+          value: "1000"
+        - name: CONFIGTX_GENERAL_ORDERERTYPE
+          value: solo
+        - name: CONFIGTX_ORDERER_KAFKA_BROKERS
+          value: "kafka1.local.parisi.biz:9092,kafka2.local.parisi.biz:9092,kafka3.local.parisi.biz:9092,kafka4.local.parisi.biz:9092"
+        - name: ORDERER_KAFKA_RETRY_SHORTINTERVAL
+          value: 1s
+        - name: ORDERER_KAFKA_RETRY_SHORTTOTAL
+          value: 30s
+        - name: ORDERER_KAFKA_VERBOSE
+          value: "true"
+        - name: CONFIGTX_ORDERER_ADDRESSES
+          value: "orderer:31010"
+        - name: ORDERER_GENERAL_LISTENADDRESS
+          value: 0.0.0.0
+        - name: ORDERER_GENERAL_LISTENPORT
+          value: "31010"
+        - name: ORDERER_GENERAL_LOGLEVEL
+          value: debug
+        - name: ORDERER_GENERAL_LOCALMSPDIR
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/msp
+        - name: ORDERER_GENERAL_LOCALMSPID
+          value: OrdererMSP
+        - name: ORDERER_GENERAL_GENESISMETHOD
+          value: file
+        - name: ORDERER_GENERAL_GENESISFILE
+          value: /fabric/genesis.block
+        - name: ORDERER_GENERAL_GENESISPROFILE
+          value: initial
+        - name: ORDERER_GENERAL_TLS_ENABLED
+          value: "true"
+        - name: ORDERER_GENERAL_TLS_PRIVATEKEY
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.key
+        - name: ORDERER_GENERAL_TLS_CERTIFICATE
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.crt
+        - name: ORDERER_GENERAL_TLS_ROOTCAS
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/ca.crt
+        - name: ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED
+          value: "false"
+        - name: GODEBUG
+          value: "netdns=go"
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.key
+        - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.crt
+        - name: ORDERER_GENERAL_CLUSTER_ROOTCAS
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/ca.crt          
+        - name: ORDERER_GENERAL_LEDGERTYPE
+          value: "ram"
+        - name: ORDERER_OPERATIONS_LISTENADDRESS
+          value: 0.0.0.0:8443
+        - name: ORDERER_METRICS_PROVIDER
+          value: prometheus
+        - name: ORDERER_OPERATIONS_TLS_ENABLED
+          value: "false"
+        - name: ORDERER_OPERATIONS_TLS_PRIVATEKEY
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.key
+        - name: ORDERER_OPERATIONS_TLS_CERTIFICATE
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.crt
+        - name: ORDERER_OPERATIONS_TLS_CLIENTROOTCAS
+          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/ca.crt          
+        - name: ORDERER_OPERATIONS_TLS_CLIENTAUTHREQUIRED
+          value: "false"
+        volumeMounts:
+        - mountPath: /fabric
+          name: fabricfiles
+        # - mountPath: /etc/hosts
+        #   name: fabricfiles
+        #   subPath: ./config/hosts          

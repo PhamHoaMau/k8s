@@ -1,0 +1,66 @@
+{
+	"name": "nid1",
+	"version": "1.0.0",
+	"client": {
+		"tlsEnable": false,
+		"caCredential": {
+			"id": "admin",
+			"password": "adminpw"
+		},
+		"adminCredential": {
+			"id": "exploreradmin",
+			"password": "exploreradminpw",
+			"affiliation": "org1.department1"
+		},
+		"enableAuthentication": false,
+		"organization": "Org1MSP",
+		"connection": {
+			"timeout": {
+				"peer": {
+					"endorser": "300"
+				},
+				"orderer": "300"
+			}
+		}
+	},
+	"channels": {
+		"jwclabchannel": {
+			"peers": {
+				"org1peer0": {}
+      },
+			"connection": {
+				"timeout": {
+					"peer": {
+						"endorser": "6000",
+						"eventHub": "6000",
+						"eventReg": "6000"
+					}
+				}
+			}
+		}
+	},
+	"organizations": {
+		"Org1MSP": {
+			"mspid": "Org1MSP",
+			"adminPrivateKey": {
+			  "path": "/tmp/crypto/peerOrganizations/org1.jwclab.com/users/Admin@org1.jwclab.com/msp/keystore/priv_sk"
+      },
+      "peers": ["org1peer0"],
+			"signedCert": {
+			  "path": "/tmp/crypto/peerOrganizations/org1.jwclab.com/users/Admin@org1.jwclab.com/msp/signcerts/Admin@org1.jwclab.com-cert.pem"
+			}
+    }
+	},
+	"peers": {
+    "org1peer0": {
+      "tlsCACerts": {
+        "path": "/tmp/crypto/peerOrganizations/org1.jwclab.com/peers/peer0.org1.jwclab.com/tls/ca.crt"
+      },
+      "url": "grpc://org1peer0:30110",
+      "eventUrl": "grpc://org1peer0:30111",
+      "grpcOptions": {
+        "ssl-target-name-override": "peer0.org1.jwclab.com"
+      }
+    }
+	}
+}
