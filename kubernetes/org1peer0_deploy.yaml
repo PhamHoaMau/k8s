@@ -13,9 +13,9 @@ spec:
         name: org1peer0
     spec:
       volumes:
-      # - name: fabricfiles
-      #   persistentVolumeClaim:
-      #     claimName: fabric-pvc
+      - name: fabricfiles
+        persistentVolumeClaim:
+          claimName: fabric-pvc
       - name: dockersocket
         hostPath:
           path: /var/run/docker.sock
@@ -108,8 +108,8 @@ spec:
         - name: CORE_OPERATIONS_TLS_CLIENTAUTHREQUIRED
           value: "false"
         volumeMounts:
-        # - mountPath: /fabric
-        #   name: fabricfiles
+        - mountPath: /fabric
+          name: fabricfiles
         - mountPath: /host/var/run/docker.sock
           name: dockersocket
         # - mountPath: /etc/hosts

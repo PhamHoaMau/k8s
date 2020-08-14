@@ -7,12 +7,10 @@ metadata:
     name: fabricfiles
 spec:
   capacity:
-    storage: 10Gi
+    storage: 15Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
-  nfs:
-    path: /nfs/fabric
-    server: nfs
-    readOnly: false
+  hostPath:
+    path: "/mnt/data"
