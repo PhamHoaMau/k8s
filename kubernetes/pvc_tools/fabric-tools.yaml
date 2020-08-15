@@ -4,12 +4,15 @@ metadata:
   name: fabric-tools
 spec:
   volumes:
-  - name: fabricfiles
-    persistentVolumeClaim:
-      claimName: fabric-pvc
+  # - name: fabricfiles
+  #   persistentVolumeClaim:
+  #     claimName: fabric-pvc
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
+  - name: hostpath
+    hostPath:
+      path: /mnt/volume_blockchain/
   containers:
     - name: fabrictools
       image: hyperledger/fabric-tools:amd64-2.2.0
@@ -19,8 +22,8 @@ spec:
       - name: FABRIC_CFG_PATH
         value: "/fabric"
       volumeMounts:
-        - mountPath: "/fabric"
-          name: fabricfiles
+        - mountPath: /host/mnt/volume_blockchain/
+          name: hostpath
         - mountPath: /host/var/run/docker.sock
           name: dockersocket
         # - mountPath: /etc/hosts
