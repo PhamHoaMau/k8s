@@ -2,8 +2,6 @@ kind: PersistentVolume
 apiVersion: v1
 metadata:
   name: fabric-pv
-  labels:
-    name: fabricfiles
 spec:
   capacity:
     storage: 15Gi
@@ -11,8 +9,26 @@ spec:
   accessModes:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
+  hostPath:
+    path: "/mau"
   iscsi:
     targetPortal: 188.166.218.144
     iqn: iqn.2005-03.org.open-iscsi:2912c8d1b93
     lun: 0
     fsType: 'ext4'
+
+
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: fabric-pvc
+spec:
+  accessModes:
+    - ReadOnlyMany
+  resources:
+    requests:
+      storage: 10Gi
+  selector:
+    matchLabels:
+      name: fabricfiles
