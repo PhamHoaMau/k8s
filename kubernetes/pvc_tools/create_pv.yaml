@@ -10,7 +10,7 @@ spec:
     storage: 15Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadOnlyMany
+    - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   hostPath:
     path: "/fabric"
