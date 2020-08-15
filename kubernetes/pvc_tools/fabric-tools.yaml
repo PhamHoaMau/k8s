@@ -22,7 +22,7 @@ spec:
       - name: FABRIC_CFG_PATH
         value: "/fabric"
       volumeMounts:
-        - mountPath: /host/mnt/volume_blockchain/
+        - mountPath: /fabric
           name: hostpath
         - mountPath: /host/var/run/docker.sock
           name: dockersocket
