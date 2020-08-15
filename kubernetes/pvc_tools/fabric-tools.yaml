@@ -17,7 +17,7 @@ spec:
       command: ["sh", "-c", "sleep 48h"]
       env:
       - name: FABRIC_CFG_PATH
-        value: "/fabric"
+        value: "/mnt/volume_blockchain/fabric"
       volumeMounts:
         - mountPath: "/mnt/volume_blockchain"
           name: fabricfiles

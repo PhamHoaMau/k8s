@@ -13,7 +13,7 @@ spec:
     - ReadWriteMany
   persistentVolumeReclaimPolicy: Retain
   iscsi:
-    targetPortal: 188.166.218.144:3260
+    targetPortal: 188.166.218.144
     iqn: iqn.2005-03.org.open-iscsi:2912c8d1b93
     lun: 0
     fsType: 'ext4'
