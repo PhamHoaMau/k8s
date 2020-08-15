@@ -17,9 +17,9 @@ spec:
       command: ["sh", "-c", "sleep 48h"]
       env:
       - name: FABRIC_CFG_PATH
-        value: "/mnt/volume_blockchain/fabric"
+        value: "/fabric"
       volumeMounts:
-        - mountPath: "/mnt/volume_blockchain"
+        - mountPath: "/fabric"
           name: fabricfiles
         - mountPath: /host/var/run/docker.sock
           name: dockersocket
