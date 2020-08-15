@@ -13,7 +13,7 @@ spec:
     - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
   hostPath:
-    path: "/mau"
+    path: "/fabric"
   # iscsi:
   #   targetPortal: 188.166.218.144
   #   iqn: iqn.2005-03.org.open-iscsi:2912c8d1b93
