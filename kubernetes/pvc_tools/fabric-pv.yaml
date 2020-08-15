@@ -10,7 +10,9 @@ spec:
     storage: 15Gi
   volumeMode: Filesystem
   accessModes:
-    - ReadWriteMany
+    - ReadOnlyMany
   persistentVolumeReclaimPolicy: Retain
-  hostPath:
-    path: "/mnt/data"
+  iscsi:
+     targetPortal: 188.166.218.144
+     lun: 0
+     fsType: 'ext4'
