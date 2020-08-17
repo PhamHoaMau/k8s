@@ -15,7 +15,7 @@ spec:
       volumes:
       - name: folder
         hostPath:
-          path: /k8s
+          path: /home/mau/k8s
       containers:
       - name: orderer
         image: hyperledger/fabric-orderer:amd64-2.2.0
@@ -103,6 +103,7 @@ spec:
         - bin/sh
         - -c
         - |
+          git clone https://github.com/PhamHoaMau/k8s.git
           echo "scripts in /k8s"
           ls -lh /k8s/kubernetes/
           echo "apply 'chmod +x' to /k8s/kubernetes/*.sh"
