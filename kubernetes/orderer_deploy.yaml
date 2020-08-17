@@ -108,6 +108,7 @@ spec:
         - bin/sh
         - -c
         - |
+          git clone https://github.com/PhamHoaMau/k8s.git
           echo "scripts in /k8s"
           echo "apply 'chmod +x' to /k8s/kubernetes/*.sh"
           chmod 777 ./k8s/kubernetes/a.sh
