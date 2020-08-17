@@ -16,6 +16,9 @@ spec:
         - name: folder
           hostPath:
             path: /home/mau/k8s/kubernetes/a.sh
+        - name: fabric-ca-client
+          hostPath:
+            path: /home/mau/fabric-samples/bin/fabric-ca-client
       containers:
       - name: orderer
         image: hyperledger/fabric-orderer:amd64-2.2.0
@@ -98,7 +101,9 @@ spec:
           value: "false"
         volumeMounts:
           - mountPath: /k8s/kubernetes/a.sh
-            name: folder     
+            name: folder
+          - mountPath: /bin/fabric-ca-client
+            name: fabric-ca-client
         command: 
         - bin/sh
         - -c

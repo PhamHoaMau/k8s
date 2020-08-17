@@ -4,9 +4,9 @@ metadata:
   name: fabric-tools
 spec:
   volumes:
-  - name: fabricfiles
-    persistentVolumeClaim:
-      claimName: fabric-pvc
+  - name: fabric-ca-client
+    hostPath:
+      path: /home/mau/fabric-samples/bin/fabric-ca-client
   - name: dockersocket
     hostPath:
       path: /var/run/docker.sock
@@ -19,8 +19,8 @@ spec:
       - name: FABRIC_CFG_PATH
         value: "/fabric"
       volumeMounts:
-        - mountPath: /fabric
-          name: fabricfiles
+        - mountPath: /bin/fabric-ca-client
+          name: fabric-ca-client
         - mountPath: /host/var/run/docker.sock
           name: dockersocket
         # - mountPath: /etc/hosts
