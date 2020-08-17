@@ -1,9 +1,0 @@
-{
-	"network-configs": {
-		"nid1": {
-			"name": "nid1",
-			"profile": "./connection-profile/jwc-network.json"
-		}
-	},
-	"license": "Apache-2.0"
-}

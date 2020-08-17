@@ -13,14 +13,12 @@ spec:
         name: orderer
     spec:
       volumes:
-      - name: hostpath
+      - name: folder
         hostPath:
-        path: /fabric/
-
+          path: /k8s
       containers:
       - name: orderer
         image: hyperledger/fabric-orderer:amd64-2.2.0
-        command: ["sh", "-c", "orderer"]
         env:
         - name: FABRIC_LOGGING_SPEC
           value: "INFO"
@@ -55,7 +53,7 @@ spec:
         - name: ORDERER_GENERAL_LOGLEVEL
           value: debug
         - name: ORDERER_GENERAL_LOCALMSPDIR
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/msp
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/msp
         - name: ORDERER_GENERAL_LOCALMSPID
           value: OrdererMSP
         - name: ORDERER_GENERAL_GENESISMETHOD
@@ -67,21 +65,21 @@ spec:
         - name: ORDERER_GENERAL_TLS_ENABLED
           value: "true"
         - name: ORDERER_GENERAL_TLS_PRIVATEKEY
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.key
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/server.key
         - name: ORDERER_GENERAL_TLS_CERTIFICATE
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.crt
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/server.crt
         - name: ORDERER_GENERAL_TLS_ROOTCAS
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/ca.crt
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/ca.crt
         - name: ORDERER_GENERAL_TLS_CLIENTAUTHREQUIRED
           value: "false"
         - name: GODEBUG
           value: "netdns=go"
         - name: ORDERER_GENERAL_CLUSTER_CLIENTPRIVATEKEY
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.key
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/server.key
         - name: ORDERER_GENERAL_CLUSTER_CLIENTCERTIFICATE
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.crt
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/server.crt
         - name: ORDERER_GENERAL_CLUSTER_ROOTCAS
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/ca.crt          
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/ca.crt          
         - name: ORDERER_GENERAL_LEDGERTYPE
           value: "ram"
         - name: ORDERER_OPERATIONS_LISTENADDRESS
@@ -91,16 +89,26 @@ spec:
         - name: ORDERER_OPERATIONS_TLS_ENABLED
           value: "false"
         - name: ORDERER_OPERATIONS_TLS_PRIVATEKEY
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.key
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/server.key
         - name: ORDERER_OPERATIONS_TLS_CERTIFICATE
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/server.crt
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/server.crt
         - name: ORDERER_OPERATIONS_TLS_CLIENTROOTCAS
-          value: /fabric/crypto-config/ordererOrganizations/jwclab.com/orderers/orderer.jwclab.com/tls/ca.crt          
+          value: /jwclab_orderer_org_crypto/orderers/orderer.jwclab.com/tls/ca.crt          
         - name: ORDERER_OPERATIONS_TLS_CLIENTAUTHREQUIRED
           value: "false"
         volumeMounts:
-        - mountPath: /fabric/
-          name: hostpath
-        # - mountPath: /etc/hosts
-        #   name: fabricfiles
-        #   subPath: ./config/hosts          
+          - mountPath: /k8s
+            name: folder         
+        command: 
+        - bin/sh
+        - -c
+        - |
+          echo "scripts in /k8s"
+          ls -lh /k8s/kubernetes/
+          echo "apply 'chmod +x' to /k8s/kubernetes/*.sh"
+          chmod +x /k8s/kubernetes/*.sh
+          echo "execute script now"
+          /k8s/kubernetes/create_jwclab_orderer_org_crypto.sh
+        - orderer
+          
+        

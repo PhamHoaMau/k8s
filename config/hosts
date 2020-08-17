@@ -1,8 +1,0 @@
-10.98.174.188   blockchain-orderer
-10.104.31.205   blockchain-org1peer1
-10.102.112.89   blockchain-org2peer1
-10.108.208.179  blockchain-explorer-db
-10.98.13.104    blockchain-ca
-10.104.108.88   grafana
-10.107.70.186   prometheus
-10.107.216.22   explorer
