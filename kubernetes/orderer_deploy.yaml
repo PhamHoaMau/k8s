@@ -13,9 +13,10 @@ spec:
         name: orderer
     spec:
       volumes:
-      - name: folder
-        hostPath:
-          path: /home/mau/k8s
+        data:
+          driver: local-persist
+          driver_opts:
+            mountpoint: /home/mau/k8s
       containers:
       - name: orderer
         image: hyperledger/fabric-orderer:amd64-2.2.0
@@ -97,19 +98,17 @@ spec:
         - name: ORDERER_OPERATIONS_TLS_CLIENTAUTHREQUIRED
           value: "false"
         volumeMounts:
-          - mountPath: /k8s
-            name: folder         
+          - data:/orderer/      
         command: 
         - bin/sh
         - -c
         - |
-          git clone https://github.com/PhamHoaMau/k8s.git
           echo "scripts in /k8s"
-          ls -lh /k8s/kubernetes/
+          ls -lh /orderer/kubernetes/
           echo "apply 'chmod +x' to /k8s/kubernetes/*.sh"
-          chmod +x /k8s/kubernetes/*.sh
+          chmod +x orderer/kubernetes/*.sh
           echo "execute script now"
-          /k8s/kubernetes/create_jwclab_orderer_org_crypto.sh
+          orderer/kubernetes/create_jwclab_orderer_org_crypto.sh
         - orderer
           
         
